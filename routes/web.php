@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\namaController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,12 +18,12 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::middleware('auth')->group(function () {
-    
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    
+    // Product
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store');
@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/product/{id}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{id}', [ProductController::class, 'delete'])->name('product.delete');
     
+    // Category (Admin Only)
+    Route::resource('category', CategoryController::class)->middleware('can:isAdmin');
 });
 
 require __DIR__.'/auth.php';

@@ -35,6 +35,12 @@
                         <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 md:col-span-2">{{ $product->name }}</div>
                     </div>
 
+                    {{-- Category --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Category</div>
+                        <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 md:col-span-2 italic">{{ $product->category->name ?? '-' }}</div>
+                    </div>
+
                     {{-- Quantity --}}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Quantity</div>
