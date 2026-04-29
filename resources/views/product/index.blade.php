@@ -127,51 +127,9 @@ c4.478 0 8.268 2.943 9.542 7
 
 </a>
 
-<a href="{{ route('product.edit', $product) }}"
-class="p-1.5 rounded-md text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition"
-title="Edit">
+<x-edit-button :url="route('product.edit', $product)" />
 
-<svg xmlns="http://www.w3.org/2000/svg"
-class="h-4 w-4"
-fill="none"
-viewBox="0 0 24 24"
-stroke="currentColor">
-
-<path stroke-linecap="round"
-stroke-linejoin="round"
-stroke-width="2"
-d="M11 5H6a2 2 0 00-2 2v11
-a2 2 0 002 2h11a2 2 0 002-2v-5"/>
-</svg>
-
-</a>
-
-<form action="{{ route('product.delete', $product->id) }}" method="POST"
-onsubmit="return confirm('Delete this product?')">
-
-@csrf
-@method('DELETE')
-
-<button type="submit"
-class="p-1.5 rounded-md text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition"
-title="Delete">
-
-<svg xmlns="http://www.w3.org/2000/svg"
-class="h-4 w-4"
-fill="none"
-viewBox="0 0 24 24"
-stroke="currentColor">
-
-<path stroke-linecap="round"
-stroke-linejoin="round"
-stroke-width="2"
-d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
-a2 2 0 01-1.995-1.858L5 7"/>
-</svg>
-
-</button>
-
-</form>
+<x-delete-button :action="route('product.delete', $product->id)" />
 
 </div>
 </td>

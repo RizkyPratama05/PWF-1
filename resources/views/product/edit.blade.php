@@ -16,7 +16,7 @@
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Update details for <span class="font-medium text-gray-700 dark:text-gray-300">{{ $product->name }}</span></p>
 
-                <form id="delete-product-form" action="{{ route('product.destroy', $product) }}" method="POST">
+                <form id="delete-product-form" action="{{ route('product.delete', $product) }}" method="POST">
                     @csrf
                     @method('DELETE')
                 </form>

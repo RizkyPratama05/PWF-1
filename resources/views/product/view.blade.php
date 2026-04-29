@@ -21,28 +21,8 @@
 
                     {{-- Action buttons --}}
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('product.edit', $product) }}"
-                           class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Edit
-                        </a>
-                        <form action="{{ route('product.destroy', $product) }}" method="POST"
-                              onsubmit="return confirm('Are you sure you want to delete this product?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                    class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg border border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
-                        </form>
+                        <x-edit-button :url="route('product.edit', $product)">Edit</x-edit-button>
+                        <x-delete-button :action="route('product.delete', $product->id)">Delete</x-delete-button>
                     </div>
                 </div>
 
@@ -50,36 +30,36 @@
                 <div class="rounded-lg border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
 
                     {{-- Name --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Product Name</div>
-                        <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ $product->name }}</div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Product Name</div>
+                        <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 md:col-span-2">{{ $product->name }}</div>
                     </div>
 
                     {{-- Quantity --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Quantity</div>
-                        <div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Quantity</div>
+                        <div class="md:col-span-2">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                 {{ $product->quantity > 0
                                     ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
                                     : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' }}">
-                                {{ $product->quantity > 0 ? 'In Stock' : 'Out Stock' }}
+                                {{ $product->quantity }} {{ $product->quantity > 0 ? 'In Stock' : 'Out Stock' }}
                             </span>
                         </div>
                     </div>
 
                     {{-- Price --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Price</div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Price</div>
+                        <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 md:col-span-2">
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </div>
                     </div>
 
                     {{-- Owner --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Owner</div>
-                        <div class="flex items-center gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Owner</div>
+                        <div class="md:col-span-2 flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-800 dark:text-indigo-300 text-xs font-bold uppercase">
                                 {{ substr($product->user->name ?? '?', 0, 1) }}
                             </div>
@@ -88,18 +68,18 @@
                     </div>
 
                     {{-- Created At --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Created At</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-300">
-                            {{ $product->created_at->format('d M, H:i') }}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Created At</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300 md:col-span-2">
+                            {{ $product->created_at->format('d M Y, H:i') }}
                         </div>
                     </div>
 
                     {{-- Updated At --}}
-                    <div class="flex items-center px-5 py-4">
-                        <div class="w-32 shrink-0 text-gray-500 dark:text-gray-400">Updated At</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-300">
-                            {{ $product->updated_at->format('d M, H:i') }}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 items-center">
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Updated At</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300 md:col-span-2">
+                            {{ $product->updated_at->format('d M Y, H:i') }}
                         </div>
                     </div>
 
